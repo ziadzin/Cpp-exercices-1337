@@ -2,94 +2,58 @@
 #include <fstream>
 #include <string>
 
-std::string replaceAll(const std::string& content, const std::string& s1, const std::string& s2)
+
+int main(int ac, char **av)
 {
+    if (ac != 4)
+    {
+        std::cerr << av[0] << " <filename> <s1> <s2>\n";
+        return 1;
+    }
+	av++;
+	std::string filename = av[0];
+	std::string s1 = av[1];
+	std::string s2 = av[2];
+
 	if (s1.empty())
-		return content;
-
-	std::string result;
-	size_t pos = 0;
-	size_t found;
-	
-	while ((found = content.find(s1, pos)) != std::string::npos)
 	{
-		result.append(content, pos, found - pos);
-		result.append(s2);
-		pos = found + s1.length();
+		std::cerr << "<s1> cannot be empty";
+		return (1);
 	}
-	result.append(content, pos, content.length() - pos);
-	
-	return result;
-}
-
-int	errsd(std::string msg)
-{
-	std::cerr << msg << '\n';
-	return 1;
-}
-
-int main(int argc, char **argv)
-{
-	if (argc != 4)
+	std::ifstream src (filename.c_str());
+	if (!src)
 	{
-		std::cerr << argv[0] << " <filename> <s1> <s2>" << std::endl;
-		return 1;
+		std::cerr << "failed to open " << filename << " verify filename\n";
+		return (1);
 	}
-	std::string filename = argv[1];
-	std::string s1 = argv[2];
-	std::string s2 = argv[3];
-	if(s1.empty())
-		return errsd("cannot be empty");
-	std::ifstream infile(filename.c_str());
-	if (!infile.is_open())
+	std::ofstream dst((filename + ".replace").c_str());
+	if (!dst)
 	{
-		std::cerr << "Error: Cannot open file '" << filename << "'" << std::endl;
-		return 1;
+		std::cerr << "Failed to create " << filename << ".replace file\n";
+		return (1);
 	}
-	
-	std::string content;
-	std::string line;
-	bool first = true;
-	
-	while (std::getline(infile, line))
+	std::string oldline;
+	size_t pos;
+	while (std::getline(src, oldline))
 	{
-		if (!first)
-			content += "\n";
-		content += line;
-		first = false;
+		pos = 0;
+		//std::cout << oldline.find(s1, pos) << '\n';
+		while ((pos = oldline.find(s1, pos)) != std::string::npos)
+		{
+			//std::cout << "oldline=>" << oldline << "<=\n";
+			//std::cout << "pos=" << pos << "=\n";
+			//std::cout << "substr=>" << oldline.substr(0, pos)<< "<=s2=>" << s2 << "<=";
+			dst << oldline.substr(0, pos) << s2;
+			oldline = oldline.substr( pos + s1.size());
+			//std::cout << "oldlinesub=>" << oldline << "<=\n";
+			pos = 0;
+		}
+		//std::cout << "oldlinefinale=>" << oldline << "<=\n";
+		dst << oldline;
+		if(!src.eof())
+			dst << '\n';
 	}
-	
-	if (infile.bad())
-	{
-		std::cerr << "Error: Failed to read file '" << filename << "'" << std::endl;
-		infile.close();
-		return 1;
-	}
-	
-	infile.close();
-	
-	std::string replaced = replaceAll(content, s1, s2);
-	
-	std::string outfilename = filename + ".replace";
-	std::ofstream outfile(outfilename.c_str());
-	if (!outfile.is_open())
-	{
-		std::cerr << "Error: Cannot create file '" << outfilename << "'" << std::endl;
-		return 1;
-	}
-	
-	outfile << replaced;
-	
-	if (outfile.bad())
-	{
-		std::cerr << "Error: Failed to write to file '" << outfilename << "'" << std::endl;
-		outfile.close();
-		return 1;
-	}
-	
-	outfile.close();
-	
-	std::cout << "File '" << outfilename << "' created successfully" << std::endl;
-	
-	return 0;
+	src.close();
+	dst.close();
+	return (0);
 }

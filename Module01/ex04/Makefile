@@ -1,6 +1,6 @@
 NAME = replace
 CXX = c++
-CXXFLGS = -Wall -Wextra -Werror -std=c++98
+CXXFLGS = -Wall -Wextra -Werror -w -std=c++98
 SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 HDRS = 
