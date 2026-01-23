@@ -1,49 +1,71 @@
 #include "FragTrap.hpp"
 #include <iostream>
+
+static void	putname(std::string name)
+{
+	std::cout << "FragTrap";
+	if(!name.empty())
+    	std::cout << ' ' << name;
+}
+
 FragTrap::FragTrap() : ClapTrap()
 {
-    hitPoints = 100;
-    energyPoints = 100;
-    attackDamage = 30;
-    std::cout << "FragTrap default constructor called\n";
+    hp = 100;
+    ep = 100;
+    damage = 30;
+	putname(name);
+    std::cout << " default constructor called\n";
 }
+
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
 {
-    hitPoints = 100;
-    energyPoints = 100;
-    attackDamage = 30;
-    std::cout << "FragTrap " << name << " constructor called\n";
+    hp = 100;
+    ep = 100;
+    damage = 30;
+	putname(name);
+    std::cout << " constructor called\n";
 }
+
 FragTrap::FragTrap(const FragTrap &other) :ClapTrap(other)
 {
-    std::cout << "FragTrap " << name << " copy constructor called\n";
+	putname(name);
+    std::cout << " copy constructor called\n";
 }
+
 FragTrap &FragTrap::operator=(const FragTrap &other)
 {
     if (this != &other)
     {
         ClapTrap::operator=(other);
     }
-    std::cout << "FragTrap assignment operator called\n";
+	putname(name);
+    std::cout << " assignment operator called\n";
     return *this;
 }
+
 FragTrap::~FragTrap()
 {
-    std::cout << "FragTrap " << name << " destructor called\n";
+	putname(name);
+    std::cout << " destructor called\n";
 }
+
 void FragTrap::highFivesGuys()
 {
-    std::cout << "FragTrap " << name << " is requesting a high five!\n";
+	putname(name);
+    std::cout << " is requesting a high five!\n";
 }
+
 void FragTrap::attack(const std::string &target)
 {
-    if (energyPoints > 0 && hitPoints > 0)
+    if (ep > 0 && hp > 0)
     {
-        energyPoints--;
-        std::cout << "FragTrap " << name << " attacks " << target << ", causing " << attackDamage << " points of damage!\n";
+        ep--;
+		putname(name);
+        std::cout << " attacks " << target << ", causing " << damage << " points of damage!\n";
     }
     else
     {
-        std::cout << "FragTrap " << name << " has insufficient energy or hit points to attack.\n";
+        putname(name);
+        std::cout << " has insufficient energy or hit points to attack.\n";
     }
 }

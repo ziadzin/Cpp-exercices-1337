@@ -1,25 +1,24 @@
-NAME = ClapTrap
-
+NAME = claptrap
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLGS = -Wall -Wextra -Werror -std=c++98
+SRCS = main.cpp ClapTrap.cpp
+OBJS = $(SRCS:.cpp=.o)
+HDRS = ClapTrap.hpp
 
-SRC = $(wildcard *.cpp)
-OBJS = $(SRC:.cpp=.o)
-HEADERS = $(wildcard *.hpp)
+all: $(NAME)
 
-all : $(NAME)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLGS) $(OBJS) -o $(NAME)
 
-$(NAME) : $(OBJS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+%.o: %.cpp $(HDRS)
+	$(CXX) $(CXXFLGS) -c $< -o $@
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-clean :
+clean:
 	rm -f $(OBJS)
-fclean : clean
+
+fclean: clean
 	rm -f $(NAME)
 
-re : fclean all
+re: fclean all
 
 .PHONY: all clean fclean re

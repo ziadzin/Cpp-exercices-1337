@@ -2,10 +2,12 @@
 
 int main()
 {
-        ScavTrap st("Jimmy");
-        ScavTrap Now = st;
+        ScavTrap p;
+        //ScavTrap z;
 
-        st.attack("other");
-        st.beRepaired(123);
-        st.guardGate();
+		//z = p;
+        p.attack("other");
+		p.takeDamage(1);
+        p.beRepaired(99);
+        p.guardGate();
 }

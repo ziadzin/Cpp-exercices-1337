@@ -1,71 +1,140 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
-ClapTrap::ClapTrap() : hitPoints(10), energyPoints(10), attackDamage(0)
+void	putname(std::string name)
 {
+	std::cout << "ClapTrap";
+	if(!name.empty())
+    	std::cout << ' ' << name;
+}
+
+//void ClapTrap::getinfo( void )
+//{
+//	std::cout << "ClapTrap " << name << " info:\n";
+//	std::cout << "Hit Points: " << hp << "\n";
+//	std::cout << "Energy Points: " << ep << "\n";
+//	std::cout << "Damage: " << damage << "\n\n";
+//}
+
+// default constructor
+ClapTrap::ClapTrap()
+{
+	hp = 10;
+	ep = 10;
+	damage = 0;
     std::cout << "ClapTrap default constructor called\n";
 }
-ClapTrap::ClapTrap(std::string name) : name(name), hitPoints(10), energyPoints(10), attackDamage(0)
+
+// parameterized constructor
+ClapTrap::ClapTrap(std::string name)
 {
-    std::cout << "ClapTrap " << name << " constructor called\n";
+	this->name = name;
+	hp = 10;
+	ep = 10;
+	damage = 0;
+	putname(name);
+    std::cout << " constructor called\n";
 }
-ClapTrap::ClapTrap(const ClapTrap &other) : name(other.name), hitPoints(other.hitPoints), 
-      energyPoints(other.energyPoints), attackDamage(other.attackDamage)
+
+// copy constructor
+ClapTrap::ClapTrap(const ClapTrap &other)
 {
-    std::cout << "ClapTrap " << name << " copy constructor called\n";
+	name = other.name;
+	hp = other.hp;
+	ep = other.ep;
+	damage = other.damage;
+	putname(name);
+    std::cout << " copy constructor called\n";
 }
+
 ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 {
     if (this != &other)
     {
         name = other.name;
-        hitPoints = other.hitPoints;
-        energyPoints = other.energyPoints;
-        attackDamage = other.attackDamage;
+        hp = other.hp;
+        ep = other.ep;
+        damage = other.damage;
     }
-    std::cout << "ClapTrap " << name << " assigned.\n";
+
+	putname(name);
+    std::cout << " assigned\n";
     return *this;
 }
 
 ClapTrap::~ClapTrap()
 {
-    std::cout << "ClapTrap " << name << " destructor called\n";
+	putname(name);
+    std::cout << " destructor called\n";
 }
+
+
+
+
+
+
+
+
 void ClapTrap::attack(const std::string &target)
 {
-    if (hitPoints > 0 && energyPoints > 0)
-    {
-        energyPoints--;
-        std::cout << "ClapTrap " << name << " attacks " << target << ", causing " << attackDamage << " points of damage!" << std::endl;
-    }
-    else
-    {
-        std::cout << "ClapTrap " << name << " has no energy or hit points left to attack!" << std::endl;
-    }    
+    if (hp > 0 && ep > 0 && ep--)
+	{
+		putname(name);
+        std::cout << " attacks " << target << ", causing " << damage << " points of damage!\n";
+	}
+    else if(!ep)
+	{
+		putname(name);
+        std::cout << " has no energy left to attack!\n";
+	}
+	else
+	{
+		putname(name);
+		std::cout << " has no hit points left to attack!\n";
+	}
 }
+
 void ClapTrap::takeDamage(unsigned int amount)
 {
-    if (hitPoints <= amount)
+    if (hp <= amount)
     {
-        hitPoints = 0;
-        std::cout << "ClapTrap " << name << " takes " << amount << " points of damage and is now destroyed!" << std::endl;
+        hp = 0;
+		putname(name);
+        std::cout << " takes " << amount << " points of damage and died!\n";
     }
     else
     {
-        hitPoints -= amount;
-        std::cout << "ClapTrap " << name << " takes " << amount << " points of damage!" << std::endl;
+        hp -= amount;
+		putname(name);
+        std::cout << " takes " << amount << " points of damage (HitPoints=" << hp <<")!\n";;
     }
 }
 void ClapTrap::beRepaired(unsigned int amount)
 {
-    if (hitPoints > 0 && energyPoints > 0)
+	if(hp == 10)
+	{
+		putname(name);
+        std::cout << " is already full(HitPoints=10)!\n";
+		return;
+	}
+    if (hp > 0 && ep > 0)
     {
-        energyPoints--;
-        hitPoints += amount;
-        std::cout << "ClapTrap " << name << " is repaired by " << amount << " points!" << std::endl;
+        ep--;
+        hp += amount;
+		if(hp > 10)
+			hp = 10;
+		putname(name);
+        std::cout << " is repaired to (HitPoints=" << hp <<")!\n";
     }
-    else
-    {
-        std::cout << "ClapTrap " << name << " has no energy or hit points left to be repaired!" << std::endl;
-    }
+	else if(!ep)
+	{
+		putname(name);
+        std::cout << " has no energy to be repaired (destroyed)!\n";
+	}
+	else
+	{
+		putname(name);
+		std::cout << " has no hit points to be repaired (destroyed)!\n";
+	}
+
 }

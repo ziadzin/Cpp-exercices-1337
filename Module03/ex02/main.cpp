@@ -2,12 +2,14 @@
 #include "ScavTrap.hpp"
 int main()
 {
-        ScavTrap scav("Scavvy");
-        FragTrap frag("Fraggy");
+        ScavTrap scav("player1");
+        FragTrap frag("player2");
+        FragTrap z;
+		z = frag;
 
-        scav.attack("Dummy");
+        scav.attack("test2");
         scav.guardGate();
-        frag.attack("Dummy");
+        frag.attack("test1");
         frag.highFivesGuys();
         return 0;
 }

@@ -1,49 +1,76 @@
 #include "ScavTrap.hpp"
 #include <iostream>
+
+static void	putname(std::string name)
+{
+	std::cout << "ScavTrap";
+	if(!name.empty())
+    	std::cout << ' ' << name;
+}
+
 ScavTrap::ScavTrap() : ClapTrap()
 {
-    hitPoints = 100;
-    energyPoints = 50;
-    attackDamage = 20;
-    std::cout << "ScavTrap default constructor called\n";
+    hp = 100;
+    ep = 50;
+    damage = 20;
+	putname(name);
+    std::cout << " default constructor called\n";
 }
+
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 {
-    hitPoints = 100;
-    energyPoints = 50;
-    attackDamage = 20;
-    std::cout << "ScavTrap " << name << " constructor called\n";
+    hp = 100;
+    ep = 50;
+    damage = 20;
+	putname(name);
+    std::cout << " constructor called\n";
 }
+
 ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other)
 {
-    std::cout << "ScavTrap " << name << " copy constructor called\n";
+	putname(name);
+    std::cout << " copy constructor called\n";
 }
+
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)
 {
     if (this != &other)
     {
         ClapTrap::operator=(other);
     }
-    std::cout << "ScavTrap assignment operator called\n";
+	putname(name);
+    std::cout << " assignment operator called\n";
     return *this;
 }
+
 ScavTrap::~ScavTrap()
 {
-    std::cout << "ScavTrap " << name << " destructor called\n";
+    putname(name);
+    std::cout << " destructor called\n";
 }
+
 void ScavTrap::guardGate()
 {
-    std::cout << "ScavTrap " << name << " is now in Gate Keeper mode.\n";
+	putname(name);
+    std::cout << " is now in Gate Keeper mode.\n";
 }
+
 void ScavTrap::attack(const std::string &target)
 {
-    if (energyPoints > 0 && hitPoints > 0)
+    if (ep > 0 && hp > 0)
     {
-        energyPoints--;
-        std::cout << "ScavTrap " << name << " attacks " << target << ", causing " << attackDamage << " points of damage!\n";
+        ep--;
+        putname(name);
+        std::cout << " attacks " << target << ", causing " << damage << " points of damage!\n";
     }
-    else
+    else if(!ep)
     {
-        std::cout << "ScavTrap " << name << " has insufficient energy or hit points to attack.\n";
+        putname(name);
+        std::cout << " has no ep(0) left to attack!\n";
     }
+	else
+	{
+		putname(name);
+		std::cout << " has no HP(0) left to attack!\n";
+	}
 }

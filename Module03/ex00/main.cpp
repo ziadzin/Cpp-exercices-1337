@@ -2,9 +2,12 @@
 
 int main()
 {
-    ClapTrap ct("Hamza");
+	ClapTrap z("Z");
+	//z.getinfo();
 
-    ct.attack("Enemy");
-    ct.beRepaired(10);
-    ct.takeDamage(14);
+	z.takeDamage(9);
+	z.attack("test");
+	z.beRepaired(2);
+
+	//z.getinfo();
 }
