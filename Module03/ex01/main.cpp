@@ -7,7 +7,7 @@ int main()
 
 		//z = p;
         p.attack("other");
-		p.takeDamage(1);
-        p.beRepaired(99);
-        p.guardGate();
+		//p.takeDamage(1);
+        //p.beRepaired(99);
+        //p.guardGate();
 }

@@ -77,6 +77,8 @@ ClapTrap::~ClapTrap()
 
 void ClapTrap::attack(const std::string &target)
 {
+	if(this == ClapTrap)
+	//std::cout << this << std::endl;
     if (hp > 0 && ep > 0 && ep--)
 	{
 		putname(name);

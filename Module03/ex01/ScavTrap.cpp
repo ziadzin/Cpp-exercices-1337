@@ -51,26 +51,27 @@ ScavTrap::~ScavTrap()
 
 void ScavTrap::guardGate()
 {
+	this->hp = 0;
 	putname(name);
     std::cout << " is now in Gate Keeper mode.\n";
 }
 
-void ScavTrap::attack(const std::string &target)
-{
-    if (ep > 0 && hp > 0)
-    {
-        ep--;
-        putname(name);
-        std::cout << " attacks " << target << ", causing " << damage << " points of damage!\n";
-    }
-    else if(!ep)
-    {
-        putname(name);
-        std::cout << " has no ep(0) left to attack!\n";
-    }
-	else
-	{
-		putname(name);
-		std::cout << " has no HP(0) left to attack!\n";
-	}
-}
+//void ScavTrap::attack(const std::string &target)
+//{
+//    if (ep > 0 && hp > 0)
+//    {
+//        ep--;
+//        putname(name);
+//        std::cout << " attacks " << target << ", causing " << damage << " points of damage!\n";
+//    }
+//    else if(!ep)
+//    {
+//        putname(name);
+//        std::cout << " has no ep(0) left to attack!\n";
+//    }
+//	else
+//	{
+//		putname(name);
+//		std::cout << " has no HP(0) left to attack!\n";
+//	}
+//}
