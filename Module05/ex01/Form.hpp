@@ -9,10 +9,10 @@ class Bureaucrat;
 class Form
 {
 	private:
-		const std::string	name;
-		bool				isSigned;
-		const int			gradeToSign;
-		const int			gradeToExecute;
+		const std::string	_name;
+		bool				_isSigned;
+		const int			_gradeToSign;
+		const int			_gradeToExecute;
 
 	public:
 		Form();
