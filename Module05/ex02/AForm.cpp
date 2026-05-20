@@ -29,7 +29,7 @@ AForm& AForm::operator=(const AForm& other)
 
 const std::string	AForm::getName() const
 {
-	return (this->_name);
+	return (_name);
 }
 
 bool AForm::getIsSigned() const
@@ -51,7 +51,7 @@ void AForm::beSigned(const Bureaucrat& bureaucrat)
 {
 	if(bureaucrat.getGrade() <= this->getGradeToSign())
 	{
-		this->_isSigned = true;
+		_isSigned = true;
 		return ;
 	}
 	throw AForm::GradeTooLowException();
@@ -59,9 +59,9 @@ void AForm::beSigned(const Bureaucrat& bureaucrat)
 
 void AForm::checkExecReqs(const Bureaucrat& executor) const
 {
-    if (!this->_isSigned)
+    if (!_isSigned)
         throw AForm::FormNotSignedException();
-    if (executor.getGrade() > this->_gradeToExecute)
+    if (executor.getGrade() > _gradeToExecute)
         throw AForm::GradeTooLowException();
 }
 

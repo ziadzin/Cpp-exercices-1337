@@ -5,7 +5,6 @@
 #include <iostream>
 #include "Bureaucrat.hpp"
 
-
 class Bureaucrat;
 
 class AForm
@@ -64,9 +63,9 @@ static std::ostream& operator<<(std::ostream& os, const AForm& form)
 	bool fsigned = form.getIsSigned();
 
 	if(fsigned)
-		os << "✅";
+		os << "✓";
 	else
-		os << "❌";
+		os << "✗";
 
 	os << "[AForm]=> Name->" << form.getName() << " | Status->";
 
