@@ -3,9 +3,10 @@
 
 #include <string>
 #include <iostream>
-#include "Bureaucrat.hpp"
+#include <exception>
 
 class Bureaucrat;
+
 class Form
 {
 	private:
@@ -29,11 +30,11 @@ class Form
 
 		class GradeTooHighException : public std::exception
 		{
-				public:
-					virtual const char* what() const throw()
-					{
-						return ("Form grade is too high!");
-					}
+			public:
+				virtual const char* what() const throw()
+				{
+					return ("Form grade is too high!");
+				}
 		};
 
 		class GradeTooLowException : public std::exception
@@ -46,25 +47,6 @@ class Form
 		};
 };
 
-static std::ostream& operator<<(std::ostream& os, const Form& form)
-{
-	bool fsigned = form.getIsSigned();
-
-	if(fsigned)
-		os << "✅";
-	else
-		os << "❌";
-
-	os << "[Form]=> Name->" << form.getName() << " | Status->";
-
-	if(fsigned)
-		os << "signed";
-	else
-		os << "unsigned";
-
-	os << " | Sign_Grade->" << form.getGradeToSign() 
-	<< " | Execute_Grade->" << form.getGradeToExecute() << '.';
-	return os;
-}
+std::ostream& operator<<(std::ostream& os, const Form& form);
 
 #endif

@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <exception>
-#include "Form.hpp"
 
 class Form;
 
@@ -12,19 +11,19 @@ class Bureaucrat
 {
 	private:
 		const std::string	_name;
-		int				_grade;
+		int					_grade;
 	public:
 		Bureaucrat();
 		Bureaucrat(std::string name, int grade);
-		Bureaucrat( const Bureaucrat& other );
-		Bureaucrat& operator=( const Bureaucrat& other );
+		Bureaucrat(const Bureaucrat& other);
+		Bureaucrat& operator=(const Bureaucrat& other);
 		~Bureaucrat();
 
-		const std::string	getName( void ) const;
-		int					getGrade( void ) const;
-		void				raiseGrade( void );
-		void				lowerGrade( void );
-		void				signForm( Form &form);
+		const std::string	getName(void) const;
+		int					getGrade(void) const;
+		void				raiseGrade(void);
+		void				lowerGrade(void);
+		void				signForm(Form& form);
 
 		class GradeTooHighException : public std::exception
 		{
@@ -45,10 +44,6 @@ class Bureaucrat
 		};
 };
 
-static std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
-{
-	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << '.';
-	return os;
-}
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat);
 
 #endif
