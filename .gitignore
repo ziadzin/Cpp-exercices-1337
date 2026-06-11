@@ -27,3 +27,5 @@ Thumbs.db
 *.egg-info/
 __pycache__/
 .zshenv_anthropic_exports
+.claude
+.gitignore
