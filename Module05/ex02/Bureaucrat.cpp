@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat() : _name("default"), _grade(150)
 {
@@ -78,4 +79,10 @@ void Bureaucrat::executeForm(const AForm &form) const
         std::cerr << "=> " << this->getName() << " couldn't execute " << form.getName() 
                   << " because " << e.what() << ".\n";
     }
+}
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
+{
+	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << '.';
+	return os;
 }

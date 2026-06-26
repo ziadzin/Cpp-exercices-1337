@@ -4,11 +4,8 @@
 #include <iostream>
 #include <string>
 #include <exception>
-#include "AForm.hpp"
-
 
 class AForm;
-
 class Bureaucrat
 {
 	private:
@@ -25,8 +22,8 @@ class Bureaucrat
 		int					getGrade(void) const;
 		void				raiseGrade(void);
 		void				lowerGrade(void);
-		void				signForm(AForm &form);
-		void				executeForm(const AForm &form) const;
+		void				signForm(AForm& form);
+		void				executeForm(const AForm& form) const;
 
 		class GradeTooHighException : public std::exception
 		{
@@ -47,10 +44,6 @@ class Bureaucrat
 		};
 };
 
-static std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
-{
-	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << '.';
-	return os;
-}
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat);
 
 #endif

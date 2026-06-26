@@ -17,7 +17,7 @@ int main()
     }
     catch (std::exception &e)
     {
-        std::cout << "Caught: " << e.what() << '\n';
+        std::cout << "✗ Exception: " << e.what() << '\n';
     }
     return 0;
 }

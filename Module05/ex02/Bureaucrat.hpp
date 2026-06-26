@@ -6,7 +6,6 @@
 #include <exception>
 
 class AForm;
-
 class Bureaucrat
 {
 	private:

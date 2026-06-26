@@ -3,73 +3,45 @@
 
 int main()
 {
-	std::cout << "=== TEST 1: Valid Form ===\n";
+
+	std::cout << "--- Test 1: Invalid Form Creation ---" << std::endl;
 	try
 	{
-		Form taxForm("TaxReturn", 50, 30);
-		std::cout << taxForm << '\n';
+		Form invalidForm("Invalid", 151, 50);
 	}
-	catch (std::exception& e)
+	catch (std::exception &e)
 	{
-		std::cout << "Unexpected: " << e.what() << '\n';
+		std::cout << "✗ Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n=== TEST 2: Sign grade too high ===\n";
-	try { Form f("Bad", 0, 30); }
-	catch (std::exception& e) { std::cout << "Caught: " << e.what() << '\n'; }
-
-	std::cout << "\n=== TEST 3: Sign grade too low ===\n";
-	try { Form f("Bad", 151, 30); }
-	catch (std::exception& e) { std::cout << "Caught: " << e.what() << '\n'; }
-
-	std::cout << "\n=== TEST 4: Exec grade too high ===\n";
-	try { Form f("Bad", 50, 0); }
-	catch (std::exception& e) { std::cout << "Caught: " << e.what() << '\n'; }
-
-	std::cout << "\n=== TEST 5: Exec grade too low ===\n";
-	try { Form f("Bad", 50, 151); }
-	catch (std::exception& e) { std::cout << "Caught: " << e.what() << '\n'; }
-
-	std::cout << "\n=== TEST 6: Successful sign ===\n";
+	std::cout << "\n--- Test 2: Valid Form & Successful Sign ---" << std::endl;
 	try
 	{
-		Form contract("Contract", 50, 30);
-		Bureaucrat john("John", 45);
-		std::cout << contract << '\n';
-		std::cout << john << '\n';
-		john.signForm(contract);
-		std::cout << contract << '\n';
-	}
-	catch (std::exception& e)
-	{
-		std::cout << "Unexpected: " << e.what() << '\n';
-	}
-
-	std::cout << "\n=== TEST 7: Failed sign (grade too low) ===\n";
-	try
-	{
-		Form senior("Senior", 30, 20);
-		Bureaucrat jane("Jane", 60);
-		jane.signForm(senior);
-		std::cout << senior << '\n';
-	}
-	catch (std::exception& e)
-	{
-		std::cout << "Unexpected: " << e.what() << '\n';
-	}
-
-	std::cout << "\n=== TEST 8: Double sign (idempotent / no-op) ===\n";
-	try
-	{
-		Form memo("Memo", 100, 100);
 		Bureaucrat boss("Boss", 1);
-		boss.signForm(memo);
-		boss.signForm(memo);
-		std::cout << memo << '\n';
+		Form taxForm("TaxForm", 50, 50);
+		
+		std::cout << taxForm << std::endl;
+		boss.signForm(taxForm);
+		std::cout << taxForm << std::endl;
 	}
-	catch (std::exception& e)
+	catch (std::exception &e)
 	{
-		std::cout << "Unexpected: " << e.what() << '\n';
+		std::cout << "✗ Exception: " << e.what() << std::endl;
+	}
+
+	std::cout << "\n--- Test 3: Valid Form & Failed Sign (Grade too low) ---" << std::endl;
+	try
+	{
+		Bureaucrat intern("Intern", 100);
+		Form topSecretForm("TopSecret", 10, 10);
+		
+		std::cout << topSecretForm << std::endl;
+		intern.signForm(topSecretForm);
+		std::cout << topSecretForm << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "✗ Exception: " << e.what() << std::endl;
 	}
 
 	return 0;

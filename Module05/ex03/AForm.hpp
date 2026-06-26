@@ -3,7 +3,6 @@
 
 #include <string>
 #include <iostream>
-#include "Bureaucrat.hpp"
 
 class Bureaucrat;
 
@@ -58,25 +57,6 @@ class AForm
 		};
 };
 
-static std::ostream& operator<<(std::ostream& os, const AForm& form)
-{
-	bool fsigned = form.getIsSigned();
-
-	if(fsigned)
-		os << "✓";
-	else
-		os << "✗";
-
-	os << "[AForm]=> Name->" << form.getName() << " | Status->";
-
-	if(fsigned)
-		os << "signed";
-	else
-		os << "unsigned";
-
-	os << " | Sign_Grade->" << form.getGradeToSign() 
-	<< " | Execute_Grade->" << form.getGradeToExecute() << '.';
-	return os;
-}
+std::ostream& operator<<(std::ostream& os, const AForm& form);
 
 #endif

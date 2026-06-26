@@ -1,22 +1,23 @@
 #include "AForm.hpp"
+#include "Bureaucrat.hpp"
 
 AForm::AForm() :
-	_name("default_form"), _gradeToSign(150),
-	_gradeToExecute(150), _isSigned(false)
+	_name("default_form"), _isSigned(false), _gradeToSign(150),
+	_gradeToExecute(150)
 {
 }
 
-AForm::AForm(std::string name, int gradeToSign, int gradeToExecute) : _name(name), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute), _isSigned(false)
+AForm::AForm(std::string name, int gradeToSign, int gradeToExecute) : _name(name), _isSigned(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
 {
-	if (gradeToSign < 1)
+	if (gradeToSign < 1 || gradeToExecute < 1)
 		throw AForm::GradeTooHighException();
-	else if (gradeToSign > 150)
+	else if (gradeToSign > 150 || gradeToExecute > 150)
 		throw AForm::GradeTooLowException();
 }
 
 AForm::AForm(const AForm& other) : 
-	_name(other._name), _gradeToSign(other._gradeToSign), 
-	_gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned)
+	_name(other._name), _isSigned(other._isSigned), _gradeToSign(other._gradeToSign), 
+	_gradeToExecute(other._gradeToExecute)
 {
 }
 
@@ -63,6 +64,27 @@ void AForm::checkExecReqs(const Bureaucrat& executor) const
         throw AForm::FormNotSignedException();
     if (executor.getGrade() > _gradeToExecute)
         throw AForm::GradeTooLowException();
+}
+
+std::ostream& operator<<(std::ostream& os, const AForm& form)
+{
+	bool fsigned = form.getIsSigned();
+
+	if(fsigned)
+		os << "✓";
+	else
+		os << "✗";
+
+	os << "[AForm]=> Name->" << form.getName() << " | Status->";
+
+	if(fsigned)
+		os << "signed";
+	else
+		os << "unsigned";
+
+	os << " | Sign_Grade->" << form.getGradeToSign() 
+	<< " | Execute_Grade->" << form.getGradeToExecute() << '.';
+	return os;
 }
 
 AForm::~AForm()
