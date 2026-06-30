@@ -3,6 +3,7 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 #include <cstddef>
+#include <iostream>
 
 Intern::Intern()
 {
@@ -59,16 +60,8 @@ AForm*	Intern::makeForm(std::string formName, std::string target)
 			std::cout << "Intern creates " << formName << std::endl;
 			return (this->*formCreators[i])(target);
 		}
-		else if (formName.substr(0, 2) == formNames[i].substr(0, 2))
-		{
-			std::cerr << "✗ Exception: Intern cannot create this form \"" << formName << "\"!"
-					<< "\nMaybe you meant " << formNames[i] << " ?"
-					<< std::endl;
-			return NULL;
-		}
 	}
 
-	std::cerr << "✗ Exception: Intern cannot create this form " << formName << "!"
-				<< std::endl;
+	std::cerr << "Intern cannot create this form \"" << formName << "\"" << std::endl;
 	return NULL;
 }

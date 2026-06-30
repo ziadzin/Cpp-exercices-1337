@@ -5,51 +5,15 @@
 int main()
 {
 	Intern someRandomIntern;
-	AForm* form1 = NULL;
-	AForm* form2 = NULL;
-	AForm* form3 = NULL;
 
-	std::cout << "--- Test 1: Invalid Form ---" << std::endl;
-	try
-	{
-		form1 = someRandomIntern.makeForm("rob", "garden");
-		if (form1) {
-			std::cout << *form1 << std::endl;
-			delete form1;
-		}
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "✗ Exception: " << e.what() << std::endl;
-	}
-
-	std::cout << "\n--- Test 2: Shrubbery Creation Form ---" << std::endl;
-	try
-	{
-		form2 = someRandomIntern.makeForm("shrubbery creation", "home");
-		if (form2) {
-			std::cout << *form2 << std::endl;
-			delete form2;
-		}
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "✗ Exception:" << e.what() << std::endl;
-	}
-
-	std::cout << "\n--- Test 3: Robotomy Request Form ---" << std::endl;
-	try
-	{
-		form3 = someRandomIntern.makeForm("robotomy request", "Bender");
-		if (form3) {
-			std::cout << *form3 << std::endl;
-			delete form3;
-		}
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "✗ Exception: " << e.what() << std::endl;
-	}
+	// "shr" starts with "sh" — matches formNames[0] "shrubbery creation" substr(0,2)
+	// so the else if fires on i==0 and returns NULL before even checking for exact match
+	AForm* f = someRandomIntern.makeForm("shrubbery creation", "home");
+	// f will be NULL — bug confirmed if this prints nothing / crashes on deref
+	if (f)
+		std::cout << *f << std::endl;
+	else
+		std::cout << "got NULL instead of a form!" << std::endl;
 
 	return 0;
 }

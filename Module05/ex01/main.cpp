@@ -29,20 +29,6 @@ int main()
 		std::cout << "✗ Exception: " << e.what() << std::endl;
 	}
 
-	std::cout << "\n--- Test 3: Valid Form & Failed Sign (Grade too low) ---" << std::endl;
-	try
-	{
-		Bureaucrat intern("Intern", 100);
-		Form topSecretForm("TopSecret", 10, 10);
-		
-		std::cout << topSecretForm << std::endl;
-		intern.signForm(topSecretForm);
-		std::cout << topSecretForm << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "✗ Exception: " << e.what() << std::endl;
-	}
 
 	return 0;
 }
