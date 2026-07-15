@@ -1,6 +1,8 @@
 #include "RobotomyRequestForm.hpp"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#
 
 RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45), _target("default_target")
 {
@@ -34,7 +36,9 @@ void RobotomyRequestForm::execute(const Bureaucrat& executor) const
 {
 	checkExecReqs(executor);
 	std::cout << "Bzzzz... Drilling noises...\n";
-	if (rand() % 2)
+	int r = rand();
+	printf("Random number generated: %d\n", r);
+	if (r % 2)
 		std::cout << _target << " has been robotomized successfully!\n";
 	else
 		std::cout << "Failed to robotomize " << _target << ".\n";

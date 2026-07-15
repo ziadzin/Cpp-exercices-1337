@@ -9,8 +9,8 @@ int main()
 	std::cout << "=== TEST 1: ShrubberyCreationForm ===" << std::endl;
 	try
 	{
-		Bureaucrat john("John", 136);
-		ShrubberyCreationForm shrubbery("garden");
+		Bureaucrat john("John", 1);
+		RobotomyRequestForm shrubbery("garden");
 		//AForm test("garden");
 		// and
 
