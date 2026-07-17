@@ -1,5 +1,11 @@
 #include "ScalarConverter.hpp"
 
+#include <iostream>
+#include <cctype>
+#include <cstdlib>
+#include <cmath>
+#include <limits>
+
 static void printImpossible()
 {
 	std::cout << "char: impossible" << std::endl;

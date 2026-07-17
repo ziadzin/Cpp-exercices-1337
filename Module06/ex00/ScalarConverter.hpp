@@ -2,11 +2,6 @@
 #define SCALARCONVERTER_HPP
 
 #include <string>
-#include <iostream>
-#include <cmath>
-#include <cctype>
-#include <cstdlib>
-#include <limits>
 
 enum Type
 {
