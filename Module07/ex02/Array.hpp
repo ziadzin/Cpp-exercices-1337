@@ -7,32 +7,29 @@
 template <typename T>
 class Array
 {
-  public:
-	Array();
-	Array(unsigned int n);
-	Array(const Array &other);
-	Array &operator=(const Array &other);
-	~Array();
+	public:
+		Array();
+		Array(unsigned int n);
+		Array(const Array &other);
+		Array &operator=(const Array &other);
+		~Array();
 
-	// --- Element access ---
-	T &operator[](unsigned int index);             // read/write
-	const T &operator[](unsigned int index) const; // read-only
+		T &operator[](unsigned int index);
+		const T &operator[](unsigned int index) const;
 
-	// --- Capacity ---
-	unsigned int size() const;            // element count, does not modify
+		unsigned int size() const;
 
-	// --- Exception thrown on out-of-bounds access ---
-	class OutOfBounds : public std::exception
-	{
-	  public:
-		const char *what() const throw();
-	};
+		class OutOfBounds : public std::exception
+		{
+			public:
+			const char *what() const throw();
+		};
 
-  private:
-	T           *_data;
-	unsigned int _size;
+	private:
+		T           *_data;
+		unsigned int _size;
 };
 
-#include "Array.tpp"  // template definitions live here
+#include "Array.tpp"
 
 #endif

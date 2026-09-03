@@ -1,5 +1,4 @@
-template <typename T>
-T *newcopy(T *data, unsigned int size)
+template <typename T> T *newcopy(T *data, unsigned int size)
 {
 	T *copy = new T[size];
 	for (unsigned int i = 0; i < size; i++)
@@ -7,25 +6,21 @@ T *newcopy(T *data, unsigned int size)
 	return copy;
 }
 
-template <typename T>
-Array<T>::Array() : _data(new T[0]), _size(0)
+template <typename T> Array<T>::Array() : _data(new T[0]), _size(0)
 {
 }
 
-template <typename T>
-Array<T>::Array(unsigned int n) : _data(new T[n]), _size(n)
+template <typename T> Array<T>::Array(unsigned int n) : _data(new T[n]), _size(n)
 {
 }
 
-template <typename T>
-Array<T>::Array(const Array &other)
+template <typename T> Array<T>::Array(const Array &other)
 {
 	_data = newcopy(other._data, other._size);
 	_size = other._size;
 }
 
-template <typename T>
-Array<T> &Array<T>::operator=(const Array &other)
+template <typename T> Array<T> &Array<T>::operator=(const Array &other)
 {
 	if (this != &other)
 	{
@@ -35,12 +30,7 @@ Array<T> &Array<T>::operator=(const Array &other)
 	return ;
 }
 
-template <typename T>
-Array<T> &Array<T>::operator=(const Array &other)
-
-
-template <typename T>
-Array<T>::~Array()
+template <typename T> Array<T>::~Array()
 {
 	delete[] _data;
 }
