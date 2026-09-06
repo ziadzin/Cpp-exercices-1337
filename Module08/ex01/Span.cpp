@@ -1,21 +1,30 @@
 #include "Span.hpp"
 #include <algorithm>
-#include <stdexcept>
 
-Span::Span(unsigned int N) : _maxSize(N), _numbers()
+static int	gap(int high, int low)
+{
+	return high - low;
+}
+
+Span::Span() : _N(0), _veci()
 {
 }
 
-Span::Span(const Span &other) : _maxSize(other._maxSize), _numbers(other._numbers)
+Span::Span(unsigned int size) : _N(size), _veci()
 {
+}
+
+Span::Span(const Span &other)
+{
+	*this = other;
 }
 
 Span	&Span::operator=(const Span &other)
 {
 	if (this != &other)
 	{
-		_maxSize = other._maxSize;
-		_numbers = other._numbers;
+		_N = other._N;
+		_veci = other._veci;
 	}
 	return (*this);
 }
@@ -26,32 +35,28 @@ Span::~Span()
 
 void	Span::addNumber(int number)
 {
-	if (_numbers.size() >= _maxSize)
+	if (_veci.size() >= _N)
 		throw std::out_of_range("Span: no space left");
-	_numbers.push_back(number);
+	_veci.push_back(number);
 }
 
 int	Span::shortestSpan() const
 {
-	if (_numbers.size() < 2)
-		throw std::logic_error("Span: not enough numbers stored");
+	if (_veci.size() < 2)
+		throw std::logic_error("Span: needs at least two numbers");
 
-	std::vector<int>			sorted(_numbers);
-	std::vector<int>::iterator	it;
-	int							shortest;
+	std::vector<int>	sorted(_veci);
+	std::vector<int>	gaps(_veci.size() - 1);
 
 	std::sort(sorted.begin(), sorted.end());
-	shortest = sorted[1] - sorted[0];
-	for (it = sorted.begin() + 1; it + 1 != sorted.end(); ++it)
-		shortest = std::min(shortest, *(it + 1) - *it);
-	return (shortest);
+	std::transform(sorted.begin() + 1, sorted.end(), sorted.begin(), gaps.begin(), gap);
+	return (*std::min_element(gaps.begin(), gaps.end()));
 }
 
 int	Span::longestSpan() const
 {
-	if (_numbers.size() < 2)
-		throw std::logic_error("Span: not enough numbers stored");
+	if (_veci.size() < 2)
+		throw std::logic_error("Span: needs at least two numbers");
 
-	return (*std::max_element(_numbers.begin(), _numbers.end())
-		- *std::min_element(_numbers.begin(), _numbers.end()));
+	return (gap(*std::max_element(_veci.begin(), _veci.end()), *std::min_element(_veci.begin(), _veci.end())));
 }

@@ -1,36 +1,29 @@
-#include "easyfind.hpp"
-#include <iostream>
 #include <vector>
-#include <list>
-#include <deque>
+#include <iostream>
+#include "easyfind.hpp"
 
-int	main(void)
+int main(void)
 {
-	std::vector<int>	vec;
+	std::vector<int> testvec;
 
-	vec.push_back(10);
-	vec.push_back(20);
-	vec.push_back(30);
-	vec.push_back(20);
+	testvec.push_back(42);
+	testvec.push_back(33);
+	testvec.push_back(13);
+	testvec.push_back(9);
 
-	std::vector<int>::iterator	vit = easyfind(vec, 20);
-	std::cout << "vector: found " << *vit << " at index " << (vit - vec.begin()) << std::endl;
-
-	std::list<int>	lst(vec.begin(), vec.end());
-	std::list<int>::iterator	lit = easyfind(lst, 30);
-	std::cout << "list: found " << *lit << std::endl;
-
-	std::deque<int>	deq(vec.begin(), vec.end());
-	std::deque<int>::iterator	dit = easyfind(deq, 10);
-	std::cout << "deque: found " << *dit << " at index " << (dit - deq.begin()) << std::endl;
-
+	std::vector<int>::iterator it;
 	try
 	{
-		easyfind(vec, 42);
+		it = easyfind(testvec, 13);
+		std::cout << "find => " << *it << std::endl;
+
+		it = easyfind(testvec, 1337);
+		std::cout << "find => " << *it << std::endl;
 	}
-	catch (std::exception &e)
+	catch(std::exception& e)
 	{
 		std::cout << e.what() << std::endl;
+		return 1;
 	}
-	return (0);
+	return 0;
 }

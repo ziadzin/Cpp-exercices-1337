@@ -24,7 +24,8 @@ class Array
 
 };
 
-template <typename T> T *newcopy(T *data, unsigned int size)
+template <typename T>
+T *newcopy(T *data, unsigned int size)
 {
 	if(size > 0)
 	{
