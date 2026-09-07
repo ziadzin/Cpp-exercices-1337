@@ -34,9 +34,9 @@ void	PmergeMe::parse(int argc, char **argv)
 {
 	for (int i = 1; i < argc; i++)
 	{
-		std::string		arg(argv[i]);
+		std::string			arg(argv[i]);
 		std::istringstream	iss(arg);
-		long			value;
+		long				value;
 
 		if (arg.find_first_not_of("0123456789") != std::string::npos)
 			throw std::runtime_error("Error");
@@ -55,8 +55,8 @@ void	PmergeMe::sortVector(std::vector<int> &v)
 
 	std::vector<int>	chain;
 	std::vector<int>	pend;
-	size_t			prev = 1;
-	size_t			curr = 3;
+	size_t	prev = 1;
+	size_t	curr = 3;
 
 	for (size_t i = 0; i < v.size(); i += 2)
 	{
@@ -135,8 +135,8 @@ void	PmergeMe::sortDeque(std::deque<int> &d)
 void	PmergeMe::run()
 {
 	std::clock_t	start;
-	double		vecTime;
-	double		deqTime;
+	double			vecTime;
+	double			deqTime;
 
 	std::cout << "Before:";
 	for (size_t i = 0; i < _vec.size(); i++)

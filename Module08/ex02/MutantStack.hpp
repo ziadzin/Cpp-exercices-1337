@@ -12,16 +12,19 @@ class MutantStack : public std::stack<T>
 		MutantStack() : std::stack<T>()
 		{
 		}
+
 		MutantStack(const MutantStack &other)
 		{
 			*this = other;
 		}
+
 		MutantStack	&operator=(const MutantStack &other)
 		{
 			if (this != &other)
 				std::stack<T>::operator=(other);
 			return (*this);
 		}
+
 		~MutantStack()
 		{
 		}
@@ -30,6 +33,7 @@ class MutantStack : public std::stack<T>
 		{
 			return (this->c.begin());
 		}
+	
 		iterator	end()
 		{
 			return (this->c.end());

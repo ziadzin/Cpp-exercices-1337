@@ -15,15 +15,16 @@ int main(void)
 	try
 	{
 		it = easyfind(testvec, 13);
-		std::cout << "find => " << *it << std::endl;
+		std::cout << "found => " << *it << std::endl;
 
 		it = easyfind(testvec, 1337);
-		std::cout << "find => " << *it << std::endl;
+		std::cout << "found => " << *it << std::endl;
 	}
 	catch(std::exception& e)
 	{
 		std::cout << e.what() << std::endl;
 		return 1;
 	}
+	std::cout << "No exceptions" << std::endl;
 	return 0;
 }

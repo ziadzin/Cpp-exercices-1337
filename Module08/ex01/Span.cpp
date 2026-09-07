@@ -40,6 +40,13 @@ void	Span::addNumber(int number)
 	_veci.push_back(number);
 }
 
+void	Span::addAll(const std::vector<int>& nums)
+{
+	if (_veci.size() + nums.size() > _N)
+			throw std::out_of_range("Span: no space left");
+		_veci.insert(_veci.end(), nums.begin(), nums.end());
+}
+
 int	Span::shortestSpan() const
 {
 	if (_veci.size() < 2)
@@ -58,5 +65,7 @@ int	Span::longestSpan() const
 	if (_veci.size() < 2)
 		throw std::logic_error("Span: needs at least two numbers");
 
-	return (gap(*std::max_element(_veci.begin(), _veci.end()), *std::min_element(_veci.begin(), _veci.end())));
+	int max = *std::max_element(_veci.begin(), _veci.end());
+	int min = *std::min_element(_veci.begin(), _veci.end());
+	return (gap(max, min));
 }

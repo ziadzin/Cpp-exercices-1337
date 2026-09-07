@@ -7,13 +7,14 @@
 static bool	isValidDate(const std::string &date)
 {
 	std::istringstream	iss(date);
-	int			year;
-	int			month;
-	int			day;
-	char			dash1;
-	char			dash2;
+	int		year;
+	int		month;
+	int		day;
+	char	dash1;
+	char	dash2;
 
 	iss >> year >> dash1 >> month >> dash2 >> day;
+	std::cout << year << std::endl;
 	if (iss.fail() || !iss.eof() || date.size() != 10)
 		return (false);
 	if (dash1 != '-' || dash2 != '-')
@@ -60,7 +61,7 @@ void	BitcoinExchange::loadDatabase(const std::string &file)
 	while (std::getline(in, line))
 	{
 		std::string::size_type	sep = line.find(',');
-		double			rate;
+		double	rate;
 
 		if (sep != std::string::npos && parseValue(line.substr(sep + 1), rate))
 			_db[line.substr(0, sep)] = rate;
@@ -81,8 +82,7 @@ void	BitcoinExchange::processInput(const std::string &file)
 		std::string		date = line.substr(0, sep);
 		double			value = 0;
 
-		if (sep == std::string::npos || !isValidDate(date)
-			|| !parseValue(line.substr(sep + 3), value))
+		if (sep == std::string::npos || !isValidDate(date) || !parseValue(line.substr(sep + 3), value))
 			std::cout << "Error: bad input => " << line << std::endl;
 		else if (value < 0)
 			std::cout << "Error: not a positive number." << std::endl;
