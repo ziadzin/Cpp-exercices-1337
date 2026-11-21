@@ -1,39 +1,58 @@
 #include "PhoneBook.hpp"
+#include <iostream>
+#include <cctype>
+#include <iomanip>
 
-void	enter_data(const string data, string& field)
+PhoneBook::PhoneBook() : contactCount(0), nextIndex(0) {}
+
+void	PhoneBook::addContact(const Contact& contact)
 {
-	cout << ">" << data << ": ";
+	contacts[nextIndex] = contact;
+	nextIndex = (nextIndex + 1) % 8;
+	if (contactCount < 8)
+		contactCount++;
+}
+
+int	PhoneBook::getContactCount() const { return contactCount; }
+
+const Contact&	PhoneBook::getContact(int index) const { return contacts[index]; }
+
+// Returns false on EOF (Ctrl+D) so the caller can stop cleanly.
+bool	enter_data(const std::string& data, std::string& field)
+{
+	std::cout << ">" << data << ": ";
 	if (!std::getline(std::cin, field))
-	{
-		std::cout << "\nGoodbye!\n";
-		exit(0);
-	}
+		return false;
 	if (field.empty())
 		return enter_data(data, field);
-	int i = -1;
-	while (field[++i])
+	for (size_t i = 0; i < field.length(); i++)
 	{
-		if (data == "PhoneNumber" && !isdigit(field[i]))
-			cout << "In [" << data << "] only numbers are valid\n";
-		else if ((data == "FirstName" || data == "LastName") && !isalpha(field[i]))
-			cout << "In [" << data << "] only alphabets are valid\n";
-		else if ((data == "NickName" || data == "DarkestSecret") && !isalnum(field[i]))
-			cout << "In [" << data << "] only alphabets and numbers are valid\n";
+		unsigned char c = field[i];
+		if (data == "PhoneNumber" && !std::isdigit(c))
+			std::cout << "In [" << data << "] only numbers are valid\n";
+		else if ((data == "FirstName" || data == "LastName") && !std::isalpha(c))
+			std::cout << "In [" << data << "] only alphabets are valid\n";
+		else if ((data == "NickName" || data == "DarkestSecret") && !std::isalnum(c))
+			std::cout << "In [" << data << "] only alphabets and numbers are valid\n";
 		else
 			continue ;
 		return enter_data(data, field);
 	}
-	return ;
+	return true;
 }
 
 void	add_contact(PhoneBook& pb)
 {
-	string firstName, lastName, nickname, phoneNumber, darkestSecret;
-	enter_data("FirstName", firstName);
-	enter_data("LastName", lastName);
-	enter_data("NickName", nickname);
-	enter_data("PhoneNumber", phoneNumber);
-	enter_data("DarkestSecret", darkestSecret);
+	std::string firstName, lastName, nickname, phoneNumber, darkestSecret;
+	if (!enter_data("FirstName", firstName)
+		|| !enter_data("LastName", lastName)
+		|| !enter_data("NickName", nickname)
+		|| !enter_data("PhoneNumber", phoneNumber)
+		|| !enter_data("DarkestSecret", darkestSecret))
+	{
+		std::cout << '\n';
+		return ;
+	}
 	Contact newContact;
 	newContact.setFirstName(firstName);
 	newContact.setLastName(lastName);
@@ -45,23 +64,23 @@ void	add_contact(PhoneBook& pb)
 	std::cout << "Contact added successfully!\n";
 }
 
-string	trunc_field(string& field)
+std::string	trunc_field(const std::string& field)
 {
 	if (field.length() > 10)
 		return field.substr(0, 9) + ".";
 	return field;
 }
 
-void	display_contact_row(int index, Contact& contact)
+void	display_contact_row(int index, const Contact& contact)
 {
-	std::cout << setw(10) << index;
-	std::cout << "|" << setw(10) << trunc_field(contact.getFirstName());
-	std::cout << "|" << setw(10) << trunc_field(contact.getLastName());
-	std::cout << "|" << setw(10) << trunc_field(contact.getNickname());
+	std::cout << 		std::setw(10) << index;
+	std::cout << "|" << std::setw(10) << trunc_field(contact.getFirstName());
+	std::cout << "|" << std::setw(10) << trunc_field(contact.getLastName());
+	std::cout << "|" << std::setw(10) << trunc_field(contact.getNickname());
 	std::cout << "|\n";
 }
 
-void	display_contact_details(Contact& contact)
+void	display_contact_details(const Contact& contact)
 {
 	std::cout << "First Name: " << contact.getFirstName() << '\n';
 	std::cout << "Last Name: " << contact.getLastName() << '\n';
@@ -75,33 +94,29 @@ void	index_prompt(PhoneBook& pb)
 	std::cout << "Enter Index >";
 	std::string	index;
 	if (!std::getline(std::cin, index))
-		return ;
-	if(index.length() == 1)
 	{
-		if (!isdigit(index[0]))
-			cout << "Index can only be a digit\n";
-		else if ((index[0] - '0') > 7)
-			cout << "Index[" << (index[0] - '0') << "]is out of [0]->[7]range\n";
-		else if ((index[0] - '0') >= pb.getContactCount() && cout << "No Contact with index[" << (index[0] - '0') << "]\n")
-			return ;
-		else
-			return display_contact_details(pb.getContact(index[0] - '0'));
+		std::cout << '\n';
+		return ;
 	}
-	return index_prompt(pb);
+	if (index.length() == 1 && std::isdigit(static_cast<unsigned char>(index[0]))
+		&& index[0] - '0' < pb.getContactCount())
+		return display_contact_details(pb.getContact(index[0] - '0'));
+	std::cout << "Invalid index: valid range is 0 to " << pb.getContactCount() - 1 << '\n';
 }
 
 void	search_contacts(PhoneBook& pb)
 {
-	std::cout << setw(10) << "INDEX";
-	std::cout << "|" << setw(10) << "FirstName";
-	std::cout << "|" << setw(10) << "LastName";
-	std::cout << "|" << setw(10) << "NickName";
-	std::cout << "|" << setw(10) << '\n';
-	int i = 0;
-	while(i < 8)
+	if (pb.getContactCount() == 0)
 	{
-		display_contact_row(i, pb.getContact(i));
-		i++;
+		std::cout << "PhoneBook is empty, use ADD first\n";
+		return ;
 	}
+	std::cout << 		std::setw(10) << "INDEX";
+	std::cout << "|" << std::setw(10) << "FirstName";
+	std::cout << "|" << std::setw(10) << "LastName";
+	std::cout << "|" << std::setw(10) << "NickName";
+	std::cout << "|\n";
+	for (int i = 0; i < pb.getContactCount(); i++)
+		display_contact_row(i, pb.getContact(i));
 	index_prompt(pb);
 }

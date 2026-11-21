@@ -1,9 +1,10 @@
 #include "PhoneBook.hpp"
+#include <iostream>
 
 int main(void)
 {
-	PhoneBook	pb;
-	string		mode;
+	PhoneBook		pb;
+	std::string		mode;
 
 	std::cout << "--->PhoneBook<---\n";
 	std::cout << "Commands: ADD, SEARCH, EXIT\n";

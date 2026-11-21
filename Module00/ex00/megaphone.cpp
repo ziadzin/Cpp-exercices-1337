@@ -1,16 +1,20 @@
 #include <iostream>
+#include <string>
+#include <cctype>
 
 int main(int ac, char **av)
 {
-	if(ac < 2)	return std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl, 0;
-	av++;
-	while (*av)
+	if (ac < 2)
 	{
-		std::string word = *av;
-		while (**av)
-			std::cout << (char)std::toupper(*(*av)++);
-		av++;	
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+		return 0;
 	}
-	std::cout << '\n';
+	for (int i = 1; i < ac; i++)
+	{
+		std::string arg = av[i];
+		for (size_t j = 0; j < arg.length(); j++)
+			std::cout << static_cast<char>(std::toupper(static_cast<unsigned char>(arg[j])));
+	}
+	std::cout << std::endl;
 	return 0;
 }
